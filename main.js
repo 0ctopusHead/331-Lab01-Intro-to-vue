@@ -1,15 +1,17 @@
-const { createApp, ref ,computed} = Vue
+const { createApp, ref , computed, reactive} = Vue
 
 const app = createApp({
  setup(){
     const cart = ref([])
-    const premium = ref(true)
+    const premium = ref(false)
     function updateCart(id){
         cart.value.push(id)
     }
-    function removeUpdate(){
-        cart.value = []
-        console.log(cart.value)
+    function removeUpdate(id){
+        const index = cart.value.findIndex((item=> item === id))
+        if(index !== -1){
+            cart.value.splice(index,1)
+        }
     }
     return{
         cart,
@@ -21,4 +23,7 @@ const app = createApp({
  }
 })
 app.component('product-display',productDisplay)
+app.component('review-form',reviewForm)
+app.component('review-list',reviewList)
+app.component('product-detail',productDetail)
 app.mount('#app')
